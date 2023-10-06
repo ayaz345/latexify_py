@@ -84,7 +84,7 @@ class Latex:
         Returns:
             A new expression with surrounding brackets.
         """
-        return Latex("[" + str(src) + "]")
+        return Latex(f"[{str(src)}]")
 
     @staticmethod
     def arg(src: LatexLike) -> Latex:

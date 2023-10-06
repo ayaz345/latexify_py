@@ -20,10 +20,7 @@ def test_quadratic_solution() -> None:
 
 def test_sinc() -> None:
     def sinc(x):
-        if x == 0:
-            return 1
-        else:
-            return math.sin(x) / x
+        return 1 if x == 0 else math.sin(x) / x
 
     latex = (
         r"\mathrm{sinc}(x) ="
@@ -77,7 +74,7 @@ def test_sum_with_limit_2args() -> None:
 
 def test_sum_with_reducible_limit() -> None:
     def sum_with_limit(n):
-        return sum(i for i in range(n + 1))
+        return sum(range(n + 1))
 
     latex = (
         r"\mathrm{sum\_with\_limit}(n) = \sum_{i = 0}^{n}"
@@ -88,7 +85,7 @@ def test_sum_with_reducible_limit() -> None:
 
 def test_sum_with_irreducible_limit() -> None:
     def sum_with_limit(n):
-        return sum(i for i in range(n * 3))
+        return sum(range(n * 3))
 
     latex = (
         r"\mathrm{sum\_with\_limit}(n) = \sum_{i = 0}^{n \cdot 3 - 1}"
@@ -121,7 +118,7 @@ def test_prod_with_limit_2args() -> None:
 
 def test_prod_with_reducible_limits() -> None:
     def prod_with_limit(n):
-        return math.prod(i for i in range(n - 1))
+        return math.prod(iter(range(n - 1)))
 
     latex = (
         r"\mathrm{prod\_with\_limit}(n) ="
@@ -132,7 +129,7 @@ def test_prod_with_reducible_limits() -> None:
 
 def test_prod_with_irreducible_limit() -> None:
     def prod_with_limit(n):
-        return math.prod(i for i in range(n * 3))
+        return math.prod(iter(range(n * 3)))
 
     latex = (
         r"\mathrm{prod\_with\_limit}(n) = "
@@ -201,10 +198,7 @@ def test_reduce_assignments_with_if() -> None:
     def sigmoid(x):
         p = 1 / (1 + math.exp(-x))
         n = math.exp(x) / (math.exp(x) + 1)
-        if x > 0:
-            return p
-        else:
-            return n
+        return p if x > 0 else n
 
     integration_utils.check_function(
         sigmoid,

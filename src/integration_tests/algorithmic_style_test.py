@@ -9,10 +9,7 @@ from integration_tests import integration_utils
 
 def test_factorial() -> None:
     def fact(n):
-        if n == 0:
-            return 1
-        else:
-            return n * fact(n - 1)
+        return 1 if n == 0 else n * fact(n - 1)
 
     latex = textwrap.dedent(
         r"""
@@ -47,10 +44,7 @@ def test_collatz() -> None:
     def collatz(n):
         iterations = 0
         while n > 1:
-            if n % 2 == 0:
-                n = n // 2
-            else:
-                n = 3 * n + 1
+            n = n // 2 if n % 2 == 0 else 3 * n + 1
             iterations = iterations + 1
         return iterations
 

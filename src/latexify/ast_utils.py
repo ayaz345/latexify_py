@@ -67,13 +67,12 @@ def make_constant(value: Any) -> ast.expr:
             return ast.Str(s=value)
         if isinstance(value, bytes):
             return ast.Bytes(s=value)
-    else:
-        if (
+    elif (
             value is None
             or value is ...
             or isinstance(value, (bool, int, float, complex, str, bytes))
         ):
-            return ast.Constant(value=value)
+        return ast.Constant(value=value)
 
     raise ValueError(f"Unsupported type to generate Constant: {type(value).__name__}")
 
@@ -112,13 +111,12 @@ def extract_int_or_none(node: ast.expr) -> int | None:
             and not isinstance(node.n, bool)
         ):
             return node.n
-    else:
-        if (
+    elif (
             isinstance(node, ast.Constant)
             and isinstance(node.value, int)
             and not isinstance(node.n, bool)
         ):
-            return node.value
+        return node.value
 
     return None
 
@@ -154,7 +152,4 @@ def extract_function_name_or_none(node: ast.Call) -> str | None:
     """
     if isinstance(node.func, ast.Name):
         return node.func.id
-    if isinstance(node.func, ast.Attribute):
-        return node.func.attr
-
-    return None
+    return node.func.attr if isinstance(node.func, ast.Attribute) else None
