@@ -52,10 +52,7 @@ class Config:
             # Precedence: kwargs -> config -> self
             arg = kwargs.get(name)
             if arg is None:
-                if config is not None:
-                    arg = getattr(config, name)
-                else:
-                    arg = getattr(self, name)
+                arg = getattr(config, name) if config is not None else getattr(self, name)
             return arg
 
         return Config(**{f.name: merge_field(f.name) for f in dataclasses.fields(self)})

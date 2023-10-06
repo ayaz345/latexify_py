@@ -83,19 +83,18 @@ class FunctionCodegen(ast.NodeVisitor):
                 raise exceptions.LatexifySyntaxError(
                     f"Unsupported last statement: {type(return_stmt).__name__}"
                 )
-        else:
-            if not isinstance(return_stmt, (ast.Return, ast.If)):
-                raise exceptions.LatexifySyntaxError(
-                    f"Unsupported last statement: {type(return_stmt).__name__}"
-                )
+        elif not isinstance(return_stmt, (ast.Return, ast.If)):
+            raise exceptions.LatexifySyntaxError(
+                f"Unsupported last statement: {type(return_stmt).__name__}"
+            )
 
         # Function signature: f(x, ...)
-        signature_str = name_str + "(" + ", ".join(arg_strs) + ")"
+        signature_str = f"{name_str}(" + ", ".join(arg_strs) + ")"
 
         # Function definition: f(x, ...) \triangleq ...
         return_str = self.visit(return_stmt)
         if self._use_signature:
-            return_str = signature_str + " = " + return_str
+            return_str = f"{signature_str} = {return_str}"
 
         if not body_strs:
             # Only the definition.
@@ -179,4 +178,4 @@ class FunctionCodegen(ast.NodeVisitor):
     def visit_MatchValue(self, node: ast.MatchValue) -> str:
         """Visit a MatchValue node"""
         latex = self._expression_codegen.visit(node.value)
-        return " = " + latex
+        return f" = {latex}"

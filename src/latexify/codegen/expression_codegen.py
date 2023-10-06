@@ -213,10 +213,7 @@ class ExpressionCodegen(ast.NodeVisitor):
             return None
 
         ndims = ast_utils.extract_int_or_none(node.args[0])
-        if ndims is None:
-            return None
-
-        return rf"\mathbf{{I}}_{{{ndims}}}"
+        return None if ndims is None else f"\mathbf{{I}}_{{{ndims}}}"
 
     def visit_Call(self, node: ast.Call) -> str:
         """Visit a Call node."""
@@ -280,7 +277,7 @@ class ExpressionCodegen(ast.NodeVisitor):
         """Visit an Attribute node."""
         vstr = self.visit(node.value)
         astr = self._identifier_converter.convert(node.attr)[0]
-        return vstr + "." + astr
+        return f"{vstr}.{astr}"
 
     def visit_Name(self, node: ast.Name) -> str:
         """Visit a Name node."""

@@ -111,7 +111,7 @@ class AlgorithmicCodegen(ast.NodeVisitor):
         with self._increment_level():
             body_latex = "\n".join(self.visit(stmt) for stmt in node.body)
 
-        latex = self._add_indent(f"\\If{{${cond_latex}$}}\n" + body_latex)
+        latex = self._add_indent(f"\\If{{${cond_latex}$}}\n{body_latex}")
 
         if node.orelse:
             latex += "\n" + self._add_indent("\\Else\n")
